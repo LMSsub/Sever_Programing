@@ -1,1 +1,1 @@
-C:\Users\Min\Source\Repos\Sever_Programing\Cpuls_01\Debug\Cpuls_01.exe
+C:\Users\Min\source\repos\Sever_Programing\Cpuls_01\Debug\chatSever.exe
