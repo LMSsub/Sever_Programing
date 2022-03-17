@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="thread.cpp">
+    <ClCompile Include="thread01.cpp">
       <Filter>lecture</Filter>
     </ClCompile>
   </ItemGroup>

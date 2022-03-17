@@ -1,3 +1,28 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(chatSever.vcxproj, Cpuls_01.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
-  thread.cpp
-  Cpuls_01.vcxproj -> C:\Users\Min\source\repos\Sever_Programing\Cpuls_01\Debug\chatServer.exe
+﻿D:\VisualStudio\2019\Communtiy\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (chatSever.vcxproj, Cpuls_01.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  thread02.cpp
+C:\Users\Min\source\repos\Sever_Programing\Cpuls_01\thread02.cpp(25,13): warning C4326: return type of 'main' should be 'int' instead of 'void'
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(55,14): error C2672: 'invoke': no matching overloaded function found
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(61): message : see reference to function template instantiation 'unsigned int std::thread::_Invoke<_Tuple,0,1,2>(void *) noexcept' being compiled
+          with
+          [
+              _Tuple=_Tuple
+          ]
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(66): message : see reference to function template instantiation 'unsigned int (__stdcall *std::thread::_Get_invoke<_Tuple,0,1,2>(std::integer_sequence<size_t,0,1,2>) noexcept)(void *)' being compiled
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(89): message : see reference to function template instantiation 'void std::thread::_Start<void(__cdecl &)(std::string),const char(&)[2],const char(&)[14]>(_Fn,const char (&)[2],const char (&)[14])' being compiled
+          with
+          [
+              _Fn=void (__cdecl &)(std::string)
+          ]
+C:\Users\Min\source\repos\Sever_Programing\Cpuls_01\thread02.cpp(27): message : see reference to function template instantiation 'std::thread::thread<void(__cdecl &)(std::string),const char(&)[2],const char(&)[14],0>(_Fn,const char (&)[2],const char (&)[14])' being compiled
+          with
+          [
+              _Fn=void (__cdecl &)(std::string)
+          ]
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(51,5): error C2893: Failed to specialize function template 'unknown-type std::invoke(_Callable &&,_Ty1 &&,_Types2 &&...) noexcept(<expr>)'
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\type_traits(1589): message : see declaration of 'std::invoke'
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(51,5): message : With the following template arguments:
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(51,5): message : '_Callable=void (__cdecl *)(std::string)'
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(51,5): message : '_Ty1=const char *'
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(51,5): message : '_Types2={const char *}'
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\thread(51,5): error C2780: 'unknown-type std::invoke(_Callable &&) noexcept(<expr>)': expects 1 arguments - 3 provided
+D:\VisualStudio\2019\Communtiy\VC\Tools\MSVC\14.29.30133\include\type_traits(1583): message : see declaration of 'std::invoke'
