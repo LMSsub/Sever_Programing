@@ -21,5 +21,8 @@
     <ClCompile Include="thread01.cpp">
       <Filter>lecture</Filter>
     </ClCompile>
+    <ClCompile Include="thread02.cpp">
+      <Filter>lecture</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
