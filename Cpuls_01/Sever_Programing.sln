@@ -1,36 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32228.343
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatServer", "Cpuls_01.vcxproj", "{B295F2F2-5CD1-409A-8CED-A5062FA88C12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch_Seerver", "..\Ch_Seerver\Ch_Seerver.csproj", "{4A729936-F805-44B6-8DB9-2E74794DB675}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "chatClient", "..\chatClient\chatClient.vcxproj", "{B405AC48-BA45-48A3-B6D0-1E4519E9C038}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ch_Client", "..\Ch_Client\Ch_Client.csproj", "{4B4A39E7-F3DA-4765-B201-2C2D92E63AB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Debug|x64.ActiveCfg = Debug|x64
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Debug|x64.Build.0 = Debug|x64
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Debug|x86.ActiveCfg = Debug|Win32
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Debug|x86.Build.0 = Debug|Win32
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Release|x64.ActiveCfg = Release|x64
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Release|x64.Build.0 = Release|x64
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Release|x86.ActiveCfg = Release|Win32
-		{B295F2F2-5CD1-409A-8CED-A5062FA88C12}.Release|x86.Build.0 = Release|Win32
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Debug|x64.ActiveCfg = Debug|x64
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Debug|x64.Build.0 = Debug|x64
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Debug|x86.ActiveCfg = Debug|Win32
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Debug|x86.Build.0 = Debug|Win32
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Release|x64.ActiveCfg = Release|x64
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Release|x64.Build.0 = Release|x64
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Release|x86.ActiveCfg = Release|Win32
-		{B405AC48-BA45-48A3-B6D0-1E4519E9C038}.Release|x86.Build.0 = Release|Win32
+		{4A729936-F805-44B6-8DB9-2E74794DB675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A729936-F805-44B6-8DB9-2E74794DB675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A729936-F805-44B6-8DB9-2E74794DB675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A729936-F805-44B6-8DB9-2E74794DB675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B4A39E7-F3DA-4765-B201-2C2D92E63AB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B4A39E7-F3DA-4765-B201-2C2D92E63AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B4A39E7-F3DA-4765-B201-2C2D92E63AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B4A39E7-F3DA-4765-B201-2C2D92E63AB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

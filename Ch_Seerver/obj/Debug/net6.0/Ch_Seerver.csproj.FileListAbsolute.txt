@@ -1,0 +1,15 @@
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Seerver.exe
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Seerver.deps.json
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Seerver.runtimeconfig.json
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Seerver.dll
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Seerver.pdb
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.csproj.AssemblyReference.cache
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.GeneratedMSBuildEditorConfig.editorconfig
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.AssemblyInfoInputs.cache
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.AssemblyInfo.cs
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.csproj.CoreCompileInputs.cache
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.dll
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\refint\Ch_Seerver.dll
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.pdb
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Seerver.genruntimeconfig.cache
+D:\Sever_Programing\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\ref\Ch_Seerver.dll
