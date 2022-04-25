@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Sever_Programing\\Sever_Programing\\Ch_Seerver\\Ch_Seerver.csproj",
+      "projectUniqueName": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\Ch_Seerver.csproj",
       "projectName": "Ch_Seerver",
-      "projectPath": "D:\\Sever_Programing\\Sever_Programing\\Ch_Seerver\\Ch_Seerver.csproj",
+      "projectPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\Ch_Seerver.csproj",
       "packagesPath": "C:\\Users\\Min\\.nuget\\packages\\",
-      "outputPath": "D:\\Sever_Programing\\Sever_Programing\\Ch_Seerver\\obj\\",
+      "outputPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Min\\AppData\\Roaming\\NuGet\\NuGet.Config",

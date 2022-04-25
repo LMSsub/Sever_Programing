@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Sever_Programing\\Sever_Programing\\Ch_Client\\Ch_Client.csproj",
+      "projectUniqueName": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Client\\Ch_Client.csproj",
       "projectName": "Ch_Client",
-      "projectPath": "D:\\Sever_Programing\\Sever_Programing\\Ch_Client\\Ch_Client.csproj",
+      "projectPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Client\\Ch_Client.csproj",
       "packagesPath": "C:\\Users\\Min\\.nuget\\packages\\",
-      "outputPath": "D:\\Sever_Programing\\Sever_Programing\\Ch_Client\\obj\\",
+      "outputPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Client\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Min\\AppData\\Roaming\\NuGet\\NuGet.Config",

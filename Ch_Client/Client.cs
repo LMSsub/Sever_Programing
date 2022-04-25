@@ -9,56 +9,49 @@ public class MyTcpClient
         Console.WriteLine("나는클라이언트");
         try
         {
+
             string server = "127.0.0.1";
             string message = Console.ReadLine();
 
-            // Create a TcpClient.
-            // Note, for this client to work you need to have a TcpServer
-            // connected to the same address as specified by the server, port
+            // TcpClient를 만듭니다.
+            // 이 클라이언트가 작동하려면 TcpServer가 필요합니다.
+            // 서버, 포트에서 지정한 것과 동일한 주소에 연결
             // combination.%
             Int32 port = 13000;
             TcpClient client = new TcpClient(server, port);
 
-            // Translate the passed message into ASCII and store it as a Byte array.
+            //전달된 메시지를 ASCII로 변환하고 바이트 배열로 저장합니다.
             Byte[] data = System.Text.Encoding.Default.GetBytes(message);
 
-            // Get a client stream for reading and writing.
-            //  Stream stream = client.GetStream();
-
+            // 읽고 쓰기 위한 클라이언트 스트림을 가져옵니다.
+            // Stream stream = client.GetStream();
             NetworkStream stream = client.GetStream();
-
-            // Send the message to the connected TcpServer.
+            // 연결된 TcpServer로 메시지를 보냅니다.
             stream.Write(data, 0, data.Length);
 
-            Console.WriteLine("Sent: {0}", message);
-
-            // Receive the TcpServer.response.
-
-            // Buffer to store the response bytes.
+            // TcpServer.response를 수신합니다.
+            // 응답 바이트를 저장할 버퍼입니다.
             data = new Byte[256];
-
-            // String to store the response ASCII representation.
+            // 응답 UTF8 표현을 저장할 문자열입니다.
             String responseData = String.Empty;
-
-            // Read the first batch of the TcpServer response bytes.
+            // TcpServer 응답 바이트의 첫 번째 배치를 읽습니다.
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            Console.WriteLine("Received: {0}", responseData);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            Console.WriteLine("[수]클라: {0}", responseData);
+            Console.WriteLine("[주]서버: {0}", message);
 
-            // Close everything.
+            // 모든 것을 닫습니다.
             stream.Close();
-            client.Close();
+            /*client.Close();*/
         }
-        catch (ArgumentNullException e)
+        /*catch (ArgumentNullException e)
         {
             Console.WriteLine("ArgumentNullException: {0}", e);
-        }
+        }*/
         catch (SocketException e)
         {
             Console.WriteLine("SocketException: {0}", e);
         }
 
-        Console.WriteLine("\n Press Enter to continue...");
-        Console.Read();
     }
 }
