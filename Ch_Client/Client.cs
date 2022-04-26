@@ -6,6 +6,7 @@ public class MyTcpClient
 
     public static void Main()
     {
+        LinkedList<string> list = new LinkedList<string>();
         bool state = true;
         
         Console.WriteLine("나는클라이언트 IP를 입력해주세요 127.0.0.1");
@@ -15,13 +16,22 @@ public class MyTcpClient
             {
                 /*string server = "127.0.0.1";*/
                 string server = Console.ReadLine();
-            
                 if (server == "127.0.0.1")
                 {
                     state = false;
-                    Console.WriteLine("127.0.0.1에 접속시도중... ");
-                    Console.WriteLine("'주'님께 연결되었습니다.");
-                    Int32 port = 13000;
+                    list.AddLast("127.0.0.1:9000에 접속시도중... ");
+                    Console.Clear();
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
+                    list.AddLast("'주'님께 연결되었습니다. ");
+                    Console.Clear();
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
+                    Int32 port = 9000;
                     TcpClient client = new TcpClient(server, port);
                     while (server == "127.0.0.1")
                     {
@@ -37,8 +47,7 @@ public class MyTcpClient
                         }
                         //전달된 메시지를 ASCII로 변환하고 바이트 배열로 저장합니다.
                         Byte[] data = System.Text.Encoding.Default.GetBytes(message);
-                        
-                        Console.WriteLine("[수]클라: {0}", message);
+                       
                         // 읽고 쓰기 위한 클라이언트 스트림을 가져옵니다.
                         // Stream stream = client.GetStream();
                         NetworkStream stream = client.GetStream();
@@ -46,6 +55,12 @@ public class MyTcpClient
                         
                         stream.Write(data, 0, data.Length);
                         // TcpServer.response를 수신합니다.
+                        list.AddLast("[수] : " + message);
+                        Console.Clear();
+                        foreach (string chat in list)
+                        {
+                            Console.WriteLine(chat);
+                        }
                         // 응답 바이트를 저장할 버퍼입니다.
                         data = new Byte[256];
                         // 응답 UTF8 표현을 저장할 문자열입니다.
@@ -54,15 +69,22 @@ public class MyTcpClient
                         String responseData = String.Empty;
                         Int32 bytes = stream.Read(data, 0, data.Length);
                         responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-                        Console.WriteLine("[주]서버: {0}", responseData);
+                        Console.Clear();
+                        list.AddLast("[주] : " + responseData);
+                        foreach (string chat in list)
+                        {
+                            Console.WriteLine(chat);
+                        }
                         /*string server = "127.0.0.1";*/
-                        
+
 
                     }
                 }
                 else if (server == "/q")
                 {
+                    
                     Environment.Exit(0);
+                    return;
                 }
                 else
                 {
