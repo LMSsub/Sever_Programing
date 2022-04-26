@@ -9,7 +9,7 @@ public class MyTcpClient
         LinkedList<string> list = new LinkedList<string>();
         bool state = true;
         
-        Console.WriteLine("나는클라이언트 IP를 입력해주세요 127.0.0.1");
+        Console.WriteLine("서버와 연결하기위해서 /c 127.0.0.1:9000입력해주세요" );
         try
         {
             while (state = true)
