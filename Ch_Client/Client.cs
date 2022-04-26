@@ -14,9 +14,11 @@ public class MyTcpClient
         {
             while (state = true)
             {
+                string Port = "9000";
+                string server = "127.0.0.1";
                 /*string server = "127.0.0.1";*/
-                string server = Console.ReadLine();
-                if (server == "127.0.0.1")
+                string serverInput = Console.ReadLine();
+                if (serverInput == $"/c {server}:{Port}")
                 {
                     state = false;
                     list.AddLast("127.0.0.1:9000에 접속시도중... ");
