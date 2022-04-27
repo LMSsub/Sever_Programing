@@ -1,4 +1,7 @@
 ﻿using System.Net.Sockets;
+using System.Text;
+using System.Net;
+using System.Threading;
 
 public class MyTcpClient
 {
@@ -6,87 +9,61 @@ public class MyTcpClient
 
     public static void Main()
     {
+        Mutex mutex = new Mutex();
         LinkedList<string> list = new LinkedList<string>();
+        LinkedList<string> Con = new LinkedList<string>();
         bool state = true;
-        
-        Console.WriteLine("서버와 연결하기위해서 /c 127.0.0.1:9000입력해주세요" );
+        string message = String.Empty;
+
+
+        Console.WriteLine("/cIP:Port를 입력해주세요");
         try
         {
             while (state = true)
             {
                 string Port = "9000";
                 string server = "127.0.0.1";
-                /*string server = "127.0.0.1";*/
                 string serverInput = Console.ReadLine();
+
+
+                
                 if (serverInput == $"/c {server}:{Port}")
                 {
-                    state = false;
-                    list.AddLast("127.0.0.1:9000에 접속시도중... ");
-                    Console.Clear();
-                    foreach (string chat in list)
-                    {
-                        Console.WriteLine(chat);
-                    }
-                    list.AddLast("'주'님께 연결되었습니다. ");
-                    Console.Clear();
-                    foreach (string chat in list)
-                    {
-                        Console.WriteLine(chat);
-                    }
                     Int32 port = 9000;
                     TcpClient client = new TcpClient(server, port);
-                    while (server == "127.0.0.1")
+                    state = false;
+                    Console.Clear();
+                    list.AddLast("127.0.0.1:9000에 접속시도중... ");
+                    
+                    foreach (string chat in list)
                     {
-                        string message = Console.ReadLine();
-                        // TcpClient를 만듭니다.
-                        // 이 클라이언트가 작동하려면 TcpServer가 필요합니다.
-                        // 서버, 포트에서 지정한 것과 동일한 주소에 연결
-                        // combination.%
-                        if (message == "/q")
-                        {
-                            client.Close();
-                            Environment.Exit(0);
-                        }
-                        //전달된 메시지를 ASCII로 변환하고 바이트 배열로 저장합니다.
-                        Byte[] data = System.Text.Encoding.Default.GetBytes(message);
-                       
-                        // 읽고 쓰기 위한 클라이언트 스트림을 가져옵니다.
-                        // Stream stream = client.GetStream();
-                        NetworkStream stream = client.GetStream();
-                        // 연결된 TcpServer로 메시지를 보냅니다.
-                        
-                        stream.Write(data, 0, data.Length);
-                        // TcpServer.response를 수신합니다.
-                        list.AddLast("[수] : " + message);
-                        Console.Clear();
-                        foreach (string chat in list)
-                        {
-                            Console.WriteLine(chat);
-                        }
-                        // 응답 바이트를 저장할 버퍼입니다.
-                        data = new Byte[256];
-                        // 응답 UTF8 표현을 저장할 문자열입니다.
-                        // TcpServer 응답 바이트의 첫 번째 배치를 읽습니다.
-                        
-                        String responseData = String.Empty;
-                        Int32 bytes = stream.Read(data, 0, data.Length);
-                        responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-                        Console.Clear();
-                        list.AddLast("[주] : " + responseData);
-                        foreach (string chat in list)
-                        {
-                            Console.WriteLine(chat);
-                        }
-                        /*string server = "127.0.0.1";*/
+                        Console.WriteLine(chat);
+                    }
+                    Console.Clear();
+                    list.AddLast("'수'님께 연결되었습니다. ");
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
+                    while (true)
+                    {
+                        message = String.Empty;
 
+                        NetworkStream stream = client.GetStream();
+
+                        Thread client_listen = new Thread(() => Listen(list, stream, message));
+                        client_listen.Start();
+
+
+                        Thread client_Write = new Thread(() => write(list, stream, message));
+                        client_Write.Start();
 
                     }
                 }
-                else if (server == "/q")
+                else if (serverInput == "/q")
                 {
-                    
+                    /*client.Close();*/
                     Environment.Exit(0);
-                    return;
                 }
                 else
                 {
@@ -106,5 +83,71 @@ public class MyTcpClient
             Console.WriteLine("SocketException: {0}", e);
         }
 
+    }
+    public static void Listen(LinkedList<string> list, NetworkStream stream, string message)
+    {
+
+        while (true)
+        {
+            Byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+            data = new Byte[256];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            message = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+
+            if (list.Count < 10)
+            {
+                Console.Clear();
+                list.AddLast("[수] : " + message);
+                foreach (string chat in list)
+                {
+                    Console.WriteLine(chat);
+                }
+            }
+            else
+            {
+                Console.Clear();
+                list.AddLast("[수] : " + message);
+                foreach (string chat in list)
+                {
+                    Console.WriteLine(chat);
+                }
+                list.RemoveFirst();
+            }
+
+        }
+    }
+    public static void write(LinkedList<string> list, NetworkStream stream, string message)
+    {
+        while (true)
+        {
+            message = Console.ReadLine();
+            if(message == "/q")
+            {
+                Environment.Exit(0);
+            }
+            byte[] byteData = new byte[message.Length];
+            byteData = Encoding.Default.GetBytes(message);
+
+            stream.Write(byteData, 0, byteData.Length);
+            if (list.Count <= 10)
+            {
+                Console.Clear();
+                list.AddLast("[주] : " + message);
+                foreach (string chat in list)
+                {
+                    Console.WriteLine(chat);
+                }
+            }
+            else if (list.Count > 10)
+            {
+                Console.Clear();
+                list.AddLast("[주] : " + message);
+                foreach (string chat in list)
+                {
+                    Console.WriteLine(chat);
+                }
+                list.RemoveFirst();
+            }        
+        }
     }
 }
