@@ -6,15 +6,14 @@ using System.Threading;
 public class MyTcpClient
 {
     static string Exit = "/q";
-
-
+    static string keybord ;
     public static void Main()
     {
         Mutex mutex = new Mutex(false);
         LinkedList<string> list = new LinkedList<string>();
         bool state = true;
         string message = String.Empty;
-
+        
 
 
         Console.WriteLine("/c 127.0.0.1:9000을 입력해주세요");
@@ -64,7 +63,6 @@ public class MyTcpClient
                 else if (serverInput == Exit)
                 {
                     Environment.Exit(0);
-                    
                 }
                 
                 else
@@ -100,6 +98,10 @@ public class MyTcpClient
             
             if (list.Count < 10)
             {
+                if (message == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 Console.Clear();
                 list.AddLast("[수] : " + message);
                 foreach (string chat in list)
@@ -110,6 +112,10 @@ public class MyTcpClient
             }
             else
             {
+                if (message == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 list.AddLast("[수] : " + message);
                 foreach (string chat in list)
                 {
@@ -146,6 +152,10 @@ public class MyTcpClient
             }
             else if (list.Count > 10)
             {
+                if (message == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 Console.Clear();
                 list.AddLast("[주] : " + message );
                 foreach (string chat in list)

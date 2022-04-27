@@ -54,6 +54,7 @@ class MyTcpListener
                     server_listen.Start();
 
                     Thread client_write = new Thread(() => write(list, stream,mutex));
+
                     client_write.Start();
 
 
@@ -65,7 +66,6 @@ class MyTcpListener
             Console.WriteLine("SocketException: {0}", e);
         }
 
-        Console.WriteLine("\n'수'님과의 연결이 끊어졌습니다...\nEnter를 눌러 콘솔창을 종료해주세요");
     }
 
 
@@ -97,6 +97,10 @@ class MyTcpListener
             }
             else
             {
+                if (responseData == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 list.AddLast("[주] : " + responseData);
                 Console.Clear();
                 foreach (string chat in list)
@@ -123,6 +127,10 @@ class MyTcpListener
 
             if (list.Count <= 10)
             {
+                if (message == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 list.AddLast("[수] : " + message);
                 Console.Clear();
                 foreach (string chat in list)
@@ -132,6 +140,10 @@ class MyTcpListener
             }
             else if (list.Count > 10)
             {
+                if (message == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 list.RemoveFirst();
 
                 list.AddLast("[수] : " + message);
