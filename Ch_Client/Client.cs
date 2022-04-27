@@ -35,6 +35,7 @@ public class MyTcpClient
                     list.AddLast("127.0.0.1:9000에 접속시도중... ");
                     Console.Clear();
                     list.AddLast("'수'님께 연결되었습니다. ");
+                    Console.Clear();
                     foreach (string chat in list)
                     {
                         Console.WriteLine(chat);
@@ -96,6 +97,7 @@ public class MyTcpClient
                 {
                     Environment.Exit(0);
                 }
+
                 Console.Clear();
                 list.AddLast("[수] : " + message);
                 foreach (string chat in list)
@@ -111,6 +113,7 @@ public class MyTcpClient
                     Environment.Exit(0);
                 }
                 list.AddLast("[수] : " + message);
+                Console.Clear();
                 foreach (string chat in list)
                 {
                     Console.WriteLine(chat);
@@ -128,7 +131,7 @@ public class MyTcpClient
         {
             if (cki.Key == ConsoleKey.T)
             {
-                Console.SetCursorPosition(0, 29);
+                Console.SetCursorPosition(0, 28);
                 Console.Write("채팅 :  ");
                 message = Console.ReadLine();
                 byte[] byteData = new byte[message.Length];
@@ -162,12 +165,12 @@ public class MyTcpClient
                     }
                     list.RemoveFirst();
                 }
-                break;
             }
             else
             {
                 break;
             }
+            break;
         }
     }
 

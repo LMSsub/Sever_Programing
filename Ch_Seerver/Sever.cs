@@ -125,7 +125,7 @@ class MyTcpListener
         {
             if (cki.Key == ConsoleKey.T)
             {
-                Console.SetCursorPosition(0, 29);
+                Console.SetCursorPosition(0, 28);
                 Console.Write("채팅 :  ");
                 string message = Console.ReadLine();
                 byte[] byteData = new byte[message.Length];
@@ -162,12 +162,12 @@ class MyTcpListener
                         Console.WriteLine(chat);
                     }
                 }
-                break;
             }
             else
             {
                 break;
             }
+            break;
         }
     }
 }
