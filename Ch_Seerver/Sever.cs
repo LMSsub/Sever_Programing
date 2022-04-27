@@ -3,171 +3,161 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 
-
-
 class MyTcpListener
 {
-    static string Exit = "/q";
+    static Mutex mutex = new Mutex(false);
+    static string message = String.Empty;
     public static void Main()
     {
-        ConsoleKeyInfo cki;
-        Mutex mutex = new Mutex(false);
-        LinkedList<string> list = new LinkedList<string>();
 
+        LinkedList<string> list = new LinkedList<string>();
+        NetworkStream stream = null;
         list.AddLast("Waiting Connection...");
         Console.Clear();
         foreach (string chat in list)
         {
             Console.WriteLine(chat);
         }
+
+
+
         TcpListener server = null;
+
+        Int32 port = 9000;
+        IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+        server = new TcpListener(localAddr, port);
+
+        server.Start();
+
+        TcpClient client = server.AcceptTcpClient();
+        stream = client.GetStream();
+
+        Byte[] bytes = new Byte[256];
+        String data = null;
+        string message = String.Empty;
+        Thread server_listen = new Thread(() => Listen(list, stream, message));
+        server_listen.Start();
+        ConsoleKeyInfo inputkey;
         try
         {
-            Int32 port = 9000;
-            IPAddress localAddr = IPAddress.Parse("127.0.0.1");
-
-            server = new TcpListener(localAddr, port);
-
-            server.Start();
-
-            String data = null;
-
-            string message = String.Empty;
-
-            if (true)
+            list.AddLast("'수' 님이 127.0.0.1에서 접속하셨습니다");
+            Console.Clear();
+            foreach (string chat in list)
             {
-                TcpClient client = server.AcceptTcpClient();
+                Console.WriteLine(chat);
+            }
 
-                list.AddLast("'수' 님이 127.0.0.1에서 접속하셨습니다");
-                Console.Clear();
-                foreach (string chat in list)
+
+            while (true)
+            {
+                inputkey = Console.ReadKey();
+
+                if (inputkey.KeyChar == 't')
                 {
-                    Console.WriteLine(chat);
+
+                    Console.Clear();
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
+                    Console.WriteLine("[쭈] 님이 메시지를 입력중입니다.");
+                    write(list, stream);
                 }
 
-                while (true)
+                if (inputkey.KeyChar == 'q')
                 {
-                    cki = Console.ReadKey(true);
-                    Byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-
-                    NetworkStream stream = client.GetStream();
-
-                    Thread server_listen = new Thread(() => Listen(list, bytes, stream,mutex,client,server));
-                    server_listen.Start();
-
-                    Thread client_write = new Thread(() => write(list, stream,mutex,cki));
-
-                    client_write.Start();
-
-
+                    Environment.Exit(0);
                 }
             }
         }
         catch (SocketException e)
         {
-           /* Console.WriteLine("SocketException: {0}", e);*/
+            //Console.WriteLine("SocketException: {0}", e);
         }
 
-        /*Console.WriteLine("\n'수'님과의 연결이 끊어졌습니다...\nEnter를 눌러 콘솔창을 종료해주세요");*/
+        Console.WriteLine("\nHit enter to continue...");
+        //Console.Read();
     }
 
-
-
-    public static void Listen(LinkedList<string> list, Byte[] bytes, NetworkStream stream, Mutex mutex, TcpClient client, TcpListener server)
+    public static void Listen(LinkedList<string> list, NetworkStream stream, string message)
     {
         while (true)
         {
-            bytes = new Byte[256];
 
-            String responseData = String.Empty;
+
+            Byte[] bytes = new Byte[256];
+            // 응답 UTF8 표현을 저장할 문자열입니다.
+            // TcpServer 응답 바이트의 첫 번째 배치를 읽습니다.
+
+            message = null;
             Int32 byt = stream.Read(bytes, 0, bytes.Length);
-            responseData = System.Text.Encoding.UTF8.GetString(bytes, 0, byt);
+            message = System.Text.Encoding.Default.GetString(bytes, 0, byt);
 
-
-            if (list.Count < 10)
+            if (message != "t")
             {
-                if (responseData == Exit)
+                if (list.Count > 9)
                 {
-                    Environment.Exit(0);
+                    list.RemoveFirst();
                 }
-
-                Console.Clear();
-                list.AddLast("[주] : " + responseData);
-                foreach (string chat in list)
-                {
-                    Console.WriteLine(chat);
-                }
+                list.AddLast("[수] " + message);
             }
-            else
+
+            if (message == "t")
             {
-                if (responseData == Exit)
-                {
-                    Environment.Exit(0);
-                }
-                list.AddLast("[주] : " + responseData);
+
                 Console.Clear();
                 foreach (string chat in list)
                 {
                     Console.WriteLine(chat);
                 }
+                Console.WriteLine("[수] 님이 메시지를 입력중입니다.");
 
+                message = null;
+
+
+
+            }
+            Thread thread = new Thread(() => update(list));
+            thread.Start();
+        }
+    }
+    public static void write(LinkedList<string> list, NetworkStream stream)
+    {
+        while (true)
+        {
+            mutex.WaitOne();
+            string message = Console.ReadLine();
+            Byte[] data = System.Text.Encoding.Default.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+            Console.Clear();
+            if (list.Count > 10)
+            {
                 list.RemoveFirst();
             }
-            break;
-        }
+            list.AddLast("[쭈] " + message);
 
-
-
-    }
-    public static void write(LinkedList<string> list, NetworkStream stream, Mutex mutex, ConsoleKeyInfo cki)
-    {
-        while (true)
-        {
-            if (cki.Key == ConsoleKey.T)
+            foreach (string chat in list)
             {
-                Console.SetCursorPosition(0, 28);
-                Console.Write("채팅 :  ");
-                string message = Console.ReadLine();
+                Console.WriteLine(chat);
+            }
+            /*
+            message = Console.ReadLine();
                 byte[] byteData = new byte[message.Length];
                 byteData = Encoding.Default.GetBytes(message);
+
                 stream.Write(byteData, 0, byteData.Length);
-
-                if (list.Count <= 10)
-                {
-                    if (message == Exit)
-                    {
-                        Environment.Exit(0);
-                    }
-
-                    list.AddLast("[수] : " + message);
-                    Console.Clear();
-                    foreach (string chat in list)
-                    {
-                        Console.WriteLine(chat);
-                    }
-                }
-                else if (list.Count > 10)
-                {
-                    if (message == Exit)
-                    {
-                        Environment.Exit(0);
-                    }
-
-                    list.RemoveFirst();
-
-                    list.AddLast("[수] : " + message);
-                    Console.Clear();
-                    foreach (string chat in list)
-                    {
-                        Console.WriteLine(chat);
-                    }
-                }
-            }
-            else
-            {
-                break;
-            }
-            break;
+            */
+            mutex.ReleaseMutex();
         }
+    }
+    public static void update(LinkedList<string> list)
+    {
+        mutex.WaitOne();
+        Console.Clear();
+        foreach (string chat in list)
+        {
+            Console.WriteLine(chat);
+        }
+        mutex.ReleaseMutex();
     }
 }
