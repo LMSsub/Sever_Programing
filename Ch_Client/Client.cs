@@ -5,18 +5,19 @@ using System.Threading;
 
 public class MyTcpClient
 {
+    static string Exit = "/q";
 
 
     public static void Main()
     {
-        Mutex mutex = new Mutex();
+        Mutex mutex = new Mutex(false);
         LinkedList<string> list = new LinkedList<string>();
-        LinkedList<string> Con = new LinkedList<string>();
         bool state = true;
         string message = String.Empty;
 
 
-        Console.WriteLine("/cIP:Port를 입력해주세요");
+
+        Console.WriteLine("/c 127.0.0.1:9000을 입력해주세요");
         try
         {
             while (state = true)
@@ -24,17 +25,14 @@ public class MyTcpClient
                 string Port = "9000";
                 string server = "127.0.0.1";
                 string serverInput = Console.ReadLine();
-
-
+                Int32 port = 9000;
                 
+
                 if (serverInput == $"/c {server}:{Port}")
                 {
-                    Int32 port = 9000;
-                    TcpClient client = new TcpClient(server, port);
-                    state = false;
-                    Console.Clear();
-                    list.AddLast("127.0.0.1:9000에 접속시도중... ");
+
                     
+                    list.AddLast("127.0.0.1:9000에 접속시도중... ");
                     foreach (string chat in list)
                     {
                         Console.WriteLine(chat);
@@ -45,26 +43,30 @@ public class MyTcpClient
                     {
                         Console.WriteLine(chat);
                     }
+                    TcpClient client = new TcpClient(server, port);
+                    state = false;
+                    
+                    
                     while (true)
                     {
+                        
                         message = String.Empty;
-
                         NetworkStream stream = client.GetStream();
 
-                        Thread client_listen = new Thread(() => Listen(list, stream, message));
+                        Thread client_listen = new Thread(() => Listen(list, stream, message,mutex,client));
                         client_listen.Start();
 
-
-                        Thread client_Write = new Thread(() => write(list, stream, message));
+                        Thread client_Write = new Thread(() => write(list, stream, message,mutex,client));
                         client_Write.Start();
-
                     }
+
                 }
-                else if (serverInput == "/q")
+                else if (serverInput == Exit)
                 {
-                    /*client.Close();*/
                     Environment.Exit(0);
+                    
                 }
+                
                 else
                 {
                     Console.WriteLine("서버가 연결되지 않았습니다 주소를 올바르게 입력했는지 확인해 주세요");
@@ -84,7 +86,7 @@ public class MyTcpClient
         }
 
     }
-    public static void Listen(LinkedList<string> list, NetworkStream stream, string message)
+    public static void Listen(LinkedList<string> list, NetworkStream stream, string message, Mutex mutex, TcpClient client)
     {
 
         while (true)
@@ -94,18 +96,20 @@ public class MyTcpClient
             Int32 bytes = stream.Read(data, 0, data.Length);
             message = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
+
+            
             if (list.Count < 10)
             {
                 Console.Clear();
                 list.AddLast("[수] : " + message);
                 foreach (string chat in list)
                 {
-                    Console.WriteLine(chat);
+                   Console.WriteLine(chat);
                 }
+                
             }
             else
             {
-                Console.Clear();
                 list.AddLast("[수] : " + message);
                 foreach (string chat in list)
                 {
@@ -116,21 +120,23 @@ public class MyTcpClient
 
         }
     }
-    public static void write(LinkedList<string> list, NetworkStream stream, string message)
+
+    public static void write(LinkedList<string> list, NetworkStream stream, string message,Mutex mutex,TcpClient client)
     {
         while (true)
         {
             message = Console.ReadLine();
-            if(message == "/q")
-            {
-                Environment.Exit(0);
-            }
+            
             byte[] byteData = new byte[message.Length];
             byteData = Encoding.Default.GetBytes(message);
 
             stream.Write(byteData, 0, byteData.Length);
             if (list.Count <= 10)
             {
+                if (message == Exit)
+                {
+                    Environment.Exit(0);
+                }
                 Console.Clear();
                 list.AddLast("[주] : " + message);
                 foreach (string chat in list)
@@ -141,7 +147,7 @@ public class MyTcpClient
             else if (list.Count > 10)
             {
                 Console.Clear();
-                list.AddLast("[주] : " + message);
+                list.AddLast("[주] : " + message );
                 foreach (string chat in list)
                 {
                     Console.WriteLine(chat);

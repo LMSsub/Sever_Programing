@@ -6,10 +6,12 @@ using System.Net.Sockets;
 
 class MyTcpListener
 {
+    static string Exit = "/q";
     public static void Main()
     {
-        Mutex mutex = new Mutex();
+        Mutex mutex = new Mutex(false);
         LinkedList<string> list = new LinkedList<string>();
+
         list.AddLast("Waiting Connection...");
         Console.Clear();
         foreach (string chat in list)
@@ -33,6 +35,7 @@ class MyTcpListener
             if (true)
             {
                 TcpClient client = server.AcceptTcpClient();
+
                 list.AddLast("'수' 님이 127.0.0.1에서 접속하셨습니다");
                 Console.Clear();
                 foreach (string chat in list)
@@ -43,20 +46,14 @@ class MyTcpListener
                 while (true)
                 {
 
-                    if (message == "/q")
-                    {
-                        client.Close();
-                        Environment.Exit(0);
-                    }
-
                     Byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
 
                     NetworkStream stream = client.GetStream();
 
-                    Thread server_listen = new Thread(() => Listen(list, bytes, stream));
+                    Thread server_listen = new Thread(() => Listen(list, bytes, stream,mutex,client,server));
                     server_listen.Start();
 
-                    Thread client_write = new Thread(() => write(list, stream));
+                    Thread client_write = new Thread(() => write(list, stream,mutex));
                     client_write.Start();
 
 
@@ -70,9 +67,11 @@ class MyTcpListener
 
         Console.WriteLine("\n'수'님과의 연결이 끊어졌습니다...\nEnter를 눌러 콘솔창을 종료해주세요");
     }
-    public static void Listen(LinkedList<string> list, Byte[] bytes, NetworkStream stream)
-    {
 
+
+
+    public static void Listen(LinkedList<string> list, Byte[] bytes, NetworkStream stream, Mutex mutex, TcpClient client, TcpListener server)
+    {
         while (true)
         {
             bytes = new Byte[256];
@@ -81,8 +80,14 @@ class MyTcpListener
             Int32 byt = stream.Read(bytes, 0, bytes.Length);
             responseData = System.Text.Encoding.UTF8.GetString(bytes, 0, byt);
 
+
             if (list.Count < 10)
             {
+                if (responseData == Exit)
+                {
+                    Environment.Exit(0);
+                }
+
                 Console.Clear();
                 list.AddLast("[주] : " + responseData);
                 foreach (string chat in list)
@@ -101,9 +106,13 @@ class MyTcpListener
 
                 list.RemoveFirst();
             }
+
         }
+
+
+
     }
-    public static void write(LinkedList<string> list, NetworkStream stream)
+    public static void write(LinkedList<string> list, NetworkStream stream, Mutex mutex)
     {
         while (true)
         {
