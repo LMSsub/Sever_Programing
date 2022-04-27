@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\Ch_Seerver.csproj",
-      "projectName": "Ch_Seerver",
-      "projectPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\Ch_Seerver.csproj",
+      "projectUniqueName": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\Ch_Server.csproj",
+      "projectName": "Ch_Server",
+      "projectPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\Ch_Server.csproj",
       "packagesPath": "C:\\Users\\Min\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Min\\Desktop\\Sever_Programing\\Ch_Seerver\\obj\\",
       "projectStyle": "PackageReference",

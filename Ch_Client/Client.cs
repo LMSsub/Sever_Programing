@@ -5,20 +5,23 @@ using System.Threading;
 
 public class MyTcpClient
 {
+
     static string Exit = "/q";
-    static string keybord ;
     public static void Main()
     {
-        Mutex mutex = new Mutex(false);
+        Mutex mutex = new Mutex();
         LinkedList<string> list = new LinkedList<string>();
         bool state = true;
         string message = String.Empty;
-        
+
+        //main에 ckil int로 위치 값 설정
+        ConsoleKeyInfo cki;
 
 
         Console.WriteLine("/c 127.0.0.1:9000을 입력해주세요");
         try
         {
+            
             while (state = true)
             {
                 string Port = "9000";
@@ -29,13 +32,7 @@ public class MyTcpClient
 
                 if (serverInput == $"/c {server}:{Port}")
                 {
-
-                    
                     list.AddLast("127.0.0.1:9000에 접속시도중... ");
-                    foreach (string chat in list)
-                    {
-                        Console.WriteLine(chat);
-                    }
                     Console.Clear();
                     list.AddLast("'수'님께 연결되었습니다. ");
                     foreach (string chat in list)
@@ -44,24 +41,22 @@ public class MyTcpClient
                     }
                     TcpClient client = new TcpClient(server, port);
                     state = false;
-                    
-                    
+
+                    NetworkStream stream = client.GetStream();
                     while (true)
                     {
-                        
-                        message = String.Empty;
-                        NetworkStream stream = client.GetStream();
+                        cki = Console.ReadKey(true);
+                            Thread client_listen = new Thread(() => Listen(list, stream, message, mutex, cki));
+                            client_listen.Start();
+                            Thread client_Write = new Thread(() => write(list, stream, message, mutex, cki));
+                            client_Write.Start();
 
-                        Thread client_listen = new Thread(() => Listen(list, stream, message,mutex,client));
-                        client_listen.Start();
-
-                        Thread client_Write = new Thread(() => write(list, stream, message,mutex,client));
-                        client_Write.Start();
                     }
 
                 }
                 else if (serverInput == Exit)
                 {
+                    
                     Environment.Exit(0);
                 }
                 
@@ -84,20 +79,19 @@ public class MyTcpClient
         }
 
     }
-    public static void Listen(LinkedList<string> list, NetworkStream stream, string message, Mutex mutex, TcpClient client)
+    public static void Listen(LinkedList<string> list, NetworkStream stream, string message, Mutex mutex,ConsoleKeyInfo cki)
     {
 
         while (true)
         {
-            Byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
-            data = new Byte[256];
-            Int32 bytes = stream.Read(data, 0, data.Length);
-            message = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
-
-
-            
-            if (list.Count < 10)
-            {
+                Byte[] data = System.Text.Encoding.UTF8.GetBytes(message);
+                data = new Byte[256];
+               Int32 bytes = stream.Read(data, 0, data.Length);
+               message = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+ 
+                
+                if (list.Count < 10)
+                {
                 if (message == Exit)
                 {
                     Environment.Exit(0);
@@ -107,8 +101,8 @@ public class MyTcpClient
                 foreach (string chat in list)
                 {
                    Console.WriteLine(chat);
+                    
                 }
-                
             }
             else
             {
@@ -123,47 +117,58 @@ public class MyTcpClient
                 }
                 list.RemoveFirst();
             }
-
+            break;
         }
     }
 
-    public static void write(LinkedList<string> list, NetworkStream stream, string message,Mutex mutex,TcpClient client)
+    public static void write(LinkedList<string> list, NetworkStream stream, string message,Mutex mutex, ConsoleKeyInfo cki)
+        //클라이언트가 작성 하는 곳
     {
         while (true)
         {
-            message = Console.ReadLine();
-            
-            byte[] byteData = new byte[message.Length];
-            byteData = Encoding.Default.GetBytes(message);
+            if (cki.Key == ConsoleKey.T)
+            {
+                Console.SetCursorPosition(0, 29);
+                Console.Write("채팅 :  ");
+                message = Console.ReadLine();
+                byte[] byteData = new byte[message.Length];
+                byteData = Encoding.Default.GetBytes(message);
+                stream.Write(byteData, 0, byteData.Length);
+                if (list.Count <= 10)
+                {
+                    if (message == Exit)
+                    {
+                        Environment.Exit(0);
+                    }
+                    Console.Clear();
+                    list.AddLast("[주] : " + message);
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
+                }
+                else if (list.Count > 10)
+                {
+                    if (message == Exit)
+                    {
+                        Environment.Exit(0);
+                    }
+                    Console.Clear();
+                    list.AddLast("[주] : " + message);
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
 
-            stream.Write(byteData, 0, byteData.Length);
-            if (list.Count <= 10)
-            {
-                if (message == Exit)
-                {
-                    Environment.Exit(0);
+                    }
+                    list.RemoveFirst();
                 }
-                Console.Clear();
-                list.AddLast("[주] : " + message);
-                foreach (string chat in list)
-                {
-                    Console.WriteLine(chat);
-                }
+                break;
             }
-            else if (list.Count > 10)
+            else
             {
-                if (message == Exit)
-                {
-                    Environment.Exit(0);
-                }
-                Console.Clear();
-                list.AddLast("[주] : " + message );
-                foreach (string chat in list)
-                {
-                    Console.WriteLine(chat);
-                }
-                list.RemoveFirst();
-            }        
+                break;
+            }
         }
     }
+
 }

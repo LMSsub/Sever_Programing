@@ -1,0 +1,15 @@
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Server.exe
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Server.deps.json
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Server.runtimeconfig.json
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Server.dll
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\bin\Debug\net6.0\Ch_Server.pdb
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.csproj.AssemblyReference.cache
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.AssemblyInfoInputs.cache
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.AssemblyInfo.cs
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.csproj.CoreCompileInputs.cache
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.dll
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\refint\Ch_Server.dll
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.pdb
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\Ch_Server.genruntimeconfig.cache
+C:\Users\Min\Desktop\Sever_Programing\Ch_Seerver\obj\Debug\net6.0\ref\Ch_Server.dll

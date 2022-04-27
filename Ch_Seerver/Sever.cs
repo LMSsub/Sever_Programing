@@ -4,11 +4,13 @@ using System.Net;
 using System.Net.Sockets;
 
 
+
 class MyTcpListener
 {
     static string Exit = "/q";
     public static void Main()
     {
+        ConsoleKeyInfo cki;
         Mutex mutex = new Mutex(false);
         LinkedList<string> list = new LinkedList<string>();
 
@@ -45,7 +47,7 @@ class MyTcpListener
 
                 while (true)
                 {
-
+                    cki = Console.ReadKey(true);
                     Byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
 
                     NetworkStream stream = client.GetStream();
@@ -53,7 +55,7 @@ class MyTcpListener
                     Thread server_listen = new Thread(() => Listen(list, bytes, stream,mutex,client,server));
                     server_listen.Start();
 
-                    Thread client_write = new Thread(() => write(list, stream,mutex));
+                    Thread client_write = new Thread(() => write(list, stream,mutex,cki));
 
                     client_write.Start();
 
@@ -63,9 +65,10 @@ class MyTcpListener
         }
         catch (SocketException e)
         {
-            Console.WriteLine("SocketException: {0}", e);
+           /* Console.WriteLine("SocketException: {0}", e);*/
         }
 
+        /*Console.WriteLine("\n'수'님과의 연결이 끊어졌습니다...\nEnter를 눌러 콘솔창을 종료해주세요");*/
     }
 
 
@@ -110,48 +113,60 @@ class MyTcpListener
 
                 list.RemoveFirst();
             }
-
+            break;
         }
 
 
 
     }
-    public static void write(LinkedList<string> list, NetworkStream stream, Mutex mutex)
+    public static void write(LinkedList<string> list, NetworkStream stream, Mutex mutex, ConsoleKeyInfo cki)
     {
         while (true)
         {
-            string message = Console.ReadLine();
-            byte[] byteData = new byte[message.Length];
-            byteData = Encoding.Default.GetBytes(message);
-            stream.Write(byteData, 0, byteData.Length);
-
-            if (list.Count <= 10)
+            if (cki.Key == ConsoleKey.T)
             {
-                if (message == Exit)
+                Console.SetCursorPosition(0, 29);
+                Console.Write("채팅 :  ");
+                string message = Console.ReadLine();
+                byte[] byteData = new byte[message.Length];
+                byteData = Encoding.Default.GetBytes(message);
+                stream.Write(byteData, 0, byteData.Length);
+
+                if (list.Count <= 10)
                 {
-                    Environment.Exit(0);
+                    if (message == Exit)
+                    {
+                        Environment.Exit(0);
+                    }
+
+                    list.AddLast("[수] : " + message);
+                    Console.Clear();
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
                 }
-                list.AddLast("[수] : " + message);
-                Console.Clear();
-                foreach (string chat in list)
+                else if (list.Count > 10)
                 {
-                    Console.WriteLine(chat);
+                    if (message == Exit)
+                    {
+                        Environment.Exit(0);
+                    }
+
+                    list.RemoveFirst();
+
+                    list.AddLast("[수] : " + message);
+                    Console.Clear();
+                    foreach (string chat in list)
+                    {
+                        Console.WriteLine(chat);
+                    }
                 }
+                break;
             }
-            else if (list.Count > 10)
+            else
             {
-                if (message == Exit)
-                {
-                    Environment.Exit(0);
-                }
-                list.RemoveFirst();
-
-                list.AddLast("[수] : " + message);
-                Console.Clear();
-                foreach (string chat in list)
-                {
-                    Console.WriteLine(chat);
-                }
+                break;
             }
         }
     }
